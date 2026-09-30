@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-nunito);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-girassol: var(--girassol);
+  --color-folha: var(--folha);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/*
+ * PALETA APAE (29/09/2026) — azul como base, e o amarelo-girassol e o
+ * verde-folha da logo como acentos. Pedido do cliente: "visual lúcido", nada
+ * de preto. Por isso o texto é azul-ardósia escuro e não #000, e a barra
+ * lateral é AZUL, não o preto da TodosDan.
+ * Só tema claro: o MVP não tem modo escuro.
+ */
+:root {
+  --radius: 0.75rem;
+  --background: #f4f7fc;
+  --foreground: #1b2a41;
+  --scrollbar-thumb: #b9c6dc;
+  --card: #ffffff;
+  --card-foreground: #1b2a41;
+  --popover: #ffffff;
+  --popover-foreground: #1b2a41;
+  --primary: #1d64d8;
+  --primary-foreground: #ffffff;
+  --secondary: #e8f0fc;
+  --secondary-foreground: #1b3f7a;
+  --muted: #eef2f8;
+  --muted-foreground: #5f6f89;
+  --accent: #e6effd;
+  --accent-foreground: #16408a;
+  --destructive: #e11d48;
+  --border: #dde5f0;
+  --input: #d3dcea;
+  --ring: #1d64d8;
+  --girassol: #f5b700;
+  --folha: #3aa35b;
+  --chart-1: #1d64d8;
+  --chart-2: #3aa35b;
+  --chart-3: #f5b700;
+  --chart-4: #8b5cf6;
+  --chart-5: #f43f5e;
+  --sidebar: #103f86;
+  --sidebar-foreground: #eef4ff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #103f86;
+  --sidebar-accent: #1d4f9c;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2a5ca8;
+  --sidebar-ring: #f5b700;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-size: 14px;
+  }
+  @media (min-width: 640px) {
+    html {
+      font-size: 15px;
+    }
+  }
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16px;
+    }
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--scrollbar-thumb) 45%, transparent) transparent;
+  }
+  *:hover {
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--scrollbar-thumb) 45%, transparent);
+    border-radius: 3px;
+  }
+}
+
+/* Entrada suave dos blocos (login, dashboard). */
+@keyframes sobe {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.anim-sobe {
+  animation: sobe 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Impressão: etiqueta de patrimônio e relatório da prestação de contas. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .print-full,
+  .print-full * {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/*
+ * Só a `.area-impressao` sai no papel: o resto do painel (barra, cabeçalho,
+ * botões) fica invisível. Usado pela etiqueta do patrimônio e pelo relatório
+ * da prestação de contas.
+ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .area-impressao,
+  .area-impressao * {
+    visibility: visible;
+  }
+  .area-impressao {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+  }
+}
+@media print {
+  /* os contêineres com rolagem do painel cortariam a folha */
+  * {
+    overflow: visible !important;
+  }
+  .h-svh,
+  .h-full,
+  .min-h-svh {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  [data-slot="sidebar-gap"],
+  [data-slot="sidebar-container"] {
+    display: none !important;
+  }
+}

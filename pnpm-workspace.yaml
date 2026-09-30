@@ -1,0 +1,8 @@
+allowBuilds:
+  sharp: false
+  unrs-resolver: false
+
+# Mesma versão que a todosDan-client resolve: a 7.1 passou a acusar
+# setState em efeito nos componentes copiados do template.
+overrides:
+  eslint-plugin-react-hooks: 7.0.1
